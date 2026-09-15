@@ -3,16 +3,17 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
-import Test from './test'
-
+import TodoList from './TodoList'
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
-      <Test/>
+      {/* <Test/> */}
+      <TodoList/>
     </>
   )
 }
+
 
 export default App
