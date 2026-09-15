@@ -4,12 +4,10 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
 export default function TodoList() {
-  return (
-    <React.Fragment>
-      <CssBaseline />
+  return (  
       <Container maxWidth="sm">
         <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />
       </Container>
-    </React.Fragment>
+    
   );
 }
