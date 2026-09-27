@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 export default function TodoList() {
   return (
     <Container maxWidth="sm" style={{height:"10vh"}} >
-      <Box sx={{ bgcolor: "#cfe8fc", height: "100vh" }} />
+      <Box sx={{ bgcolor: "#336084", height: "50vh" }} />
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
           <Typography
