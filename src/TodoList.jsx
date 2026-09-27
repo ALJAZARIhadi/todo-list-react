@@ -1,17 +1,16 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 export default function TodoList() {
   return (
-    <Container maxWidth="sm" style={{height:"10vh"}} >
-      <Box sx={{ bgcolor: "#336084", height: "50vh" }} />
+    <Container maxWidth="sm">
+      <CssBaseline />
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
           <Typography
