@@ -9,7 +9,7 @@ function App() {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh", // trying to understand 
-        background: "green",
+        background: "grey",
       }}
     >
       <TodoList />  

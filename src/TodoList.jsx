@@ -6,34 +6,29 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 
 export default function TodoList() {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{  height: "500px" }}>
       <CssBaseline />
-      <Card sx={{ minWidth: 275 }}>
+      <Card sx={{ minWidth: 275, marginTop: "60px" }}>
         <CardContent>
-          <Typography
-            gutterBottom
-            sx={{ color: "text.secondary", fontSize: 14 }}
-          >
-            Word of the Day
-          </Typography>
-          <Typography variant="h5" component="div">
-            dij kjskj
-          </Typography>
-          <Typography sx={{ color: "text.secondary", mb: 1.5 }}>
-            adjective
-          </Typography>
-          <Typography variant="body2">
-            well meaning and kindly.
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
+          <Grid container spacing={2}>
+            <Grid size={4}>
+              <DeleteIcon></DeleteIcon>   
+              <EditOutlinedIcon></EditOutlinedIcon>
+              <DoneOutlinedIcon></DoneOutlinedIcon>
+            </Grid>
+            <Grid size={8}>
+              <p sx={{color:"black"}}>Task Name:</p>
+              <p>Task description</p>
+            </Grid>
+          </Grid>
       </Card>
     </Container>
   );
