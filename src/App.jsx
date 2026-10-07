@@ -12,7 +12,7 @@ function App() {
         background: "green",
       }}
     >
-      <TodoList /> //tested it works wright
+      <TodoList />  
     </div>
   );
 }
