@@ -20,8 +20,8 @@ export default function TodoList() {
         </CardContent>
           <Grid container spacing={2}>
             <Grid size={4}>
-              <DeleteIcon></DeleteIcon>   
-              <EditOutlinedIcon></EditOutlinedIcon>
+              <DeleteIcon sx={{background:"White", color:"red"}}></DeleteIcon>   
+              <EditOutlinedIcon sx={{background:"White", color:"blue"}}></EditOutlinedIcon>
               <DoneOutlinedIcon></DoneOutlinedIcon>
             </Grid>
             <Grid size={8}>
