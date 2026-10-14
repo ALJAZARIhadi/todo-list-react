@@ -19,10 +19,10 @@ export default function TodoList() {
         <CardContent>
         </CardContent>
           <Grid container spacing={2}>
-            <Grid size={4}>
-              <DeleteIcon sx={{background:"White", color:"red"}}></DeleteIcon>   
-              <EditOutlinedIcon sx={{background:"White", color:"blue"}}></EditOutlinedIcon>
-              <DoneOutlinedIcon></DoneOutlinedIcon>
+            <Grid size={4} sx={{gap:"10px"}}>
+              <DeleteIcon sx={{background:"White", color:"red" , border:"solid 3px red", borderRadius:"100%"}}></DeleteIcon>   
+              <EditOutlinedIcon sx={{background:"White", color:"blue" , border:"solid 3px blue", borderRadius:"100%"}}></EditOutlinedIcon>
+              <DoneOutlinedIcon sx={{background:"White", color:"green" , border:"solid 3px green", borderRadius:"100%"}}></DoneOutlinedIcon>
             </Grid>
             <Grid size={8}>
               <p sx={{color:"black"}}>Task Name:</p>
