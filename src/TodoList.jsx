@@ -19,7 +19,7 @@ export default function TodoList() {
         <CardContent>
         </CardContent>
           <Grid container spacing={2}>
-            <Grid size={4} sx={{gap:"10px"}}>
+            <Grid size={4} sx={{display:"flex" , justifyContent:"space-between"}} >
               <DeleteIcon sx={{background:"White", color:"red" , border:"solid 3px red", borderRadius:"100%"}}></DeleteIcon>   
               <EditOutlinedIcon sx={{background:"White", color:"blue" , border:"solid 3px blue", borderRadius:"100%"}}></EditOutlinedIcon>
               <DoneOutlinedIcon sx={{background:"White", color:"green" , border:"solid 3px green", borderRadius:"100%"}}></DoneOutlinedIcon>
