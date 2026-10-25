@@ -10,13 +10,46 @@ import Grid from "@mui/material/Grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
+import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
+import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 export default function TodoList() {
   return (
     <Container maxWidth="sm" sx={{ height: "500px" }}>
       <CssBaseline />
+
       <Card sx={{ minWidth: 275, marginTop: "60px" }}>
         <CardContent></CardContent>
+
+        <Typography
+              variant="h2"
+              component="h1"
+              sx={{
+                color: "black !important",
+                display: "flex",
+                justifyContent: "center"
+                
+              }}
+            >
+              المهام اليومية
+            </Typography>
+
+        <ToggleButtonGroup exclusive aria-label="text" sx={{marginTop:"15px"}}>
+          <ToggleButton value="left" aria-label="left aligned">
+            غير منجز
+          </ToggleButton>
+          <ToggleButton value="center" aria-label="centered">
+            منجز
+          </ToggleButton>
+          <ToggleButton value="right" aria-label="right aligned">
+            الكل
+          </ToggleButton>
+        </ToggleButtonGroup>
+
         <Grid
           container
           spacing={2}
@@ -55,11 +88,15 @@ export default function TodoList() {
             <Typography
               variant="h4"
               component="h1"
-              sx={{ color: "black !important" }}
+              sx={{
+                color: "black !important",
+                display: "flex",
+                justifyContent: "end",
+              }}
             >
-              Task Name:
+              :المهمة
             </Typography>
-            <p>Task description</p>
+            <p>شرح المهمة</p>
           </Grid>
         </Grid>
       </Card>
