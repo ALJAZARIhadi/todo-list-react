@@ -26,19 +26,22 @@ export default function TodoList() {
         <CardContent></CardContent>
 
         <Typography
-              variant="h2"
-              component="h1"
-              sx={{
-                color: "black !important",
-                display: "flex",
-                justifyContent: "center"
-                
-              }}
-            >
-              المهام اليومية
-            </Typography>
+          variant="h2"
+          component="h1"
+          sx={{
+            color: "black !important",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          المهام اليومية
+        </Typography>
 
-        <ToggleButtonGroup exclusive aria-label="text" sx={{marginTop:"15px"}}>
+        <ToggleButtonGroup
+          exclusive
+          aria-label="text"
+          sx={{ marginTop: "15px" }}
+        >
           <ToggleButton value="left" aria-label="left aligned">
             غير منجز
           </ToggleButton>
@@ -99,7 +102,20 @@ export default function TodoList() {
             <p>شرح المهمة</p>
           </Grid>
         </Grid>
-      </Card>
+
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{
+          color: "black !important",
+          display: "flex",
+          justifyContent: "end",
+          marginTop:"15px"
+        }}
+        >
+        :اضافة مهمة
+      </Typography>
+        </Card>
     </Container>
   );
 }
