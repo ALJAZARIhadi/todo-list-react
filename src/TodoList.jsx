@@ -16,6 +16,7 @@ import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import TextField from "@mui/material/TextField";
 
 export default function TodoList() {
   return (
@@ -102,20 +103,22 @@ export default function TodoList() {
             <p>شرح المهمة</p>
           </Grid>
         </Grid>
-
-      <Typography
-        variant="h4"
-        component="h1"
-        sx={{
-          color: "black !important",
-          display: "flex",
-          justifyContent: "end",
-          marginTop:"15px"
-        }}
-        >
-        :اضافة مهمة
-      </Typography>
-        </Card>
+        <div sx={{display:"flex", alignItems:"left"}}>
+          <Typography
+            variant="h4"
+            component="h1"
+            sx={{
+              color: "black !important",
+              display: "flex",
+              justifyContent: "end",
+              marginTop: "15px",
+            }}
+          >
+            :اضافة مهمة
+          </Typography>
+          <TextField id="outlined-basic" label="Task" variant="outlined" />
+        </div>
+      </Card>
     </Container>
   );
 }
