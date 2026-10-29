@@ -17,15 +17,13 @@ import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import TextField from "@mui/material/TextField";
-
+import Box from "@mui/material/Box";
 export default function TodoList() {
   return (
     <Container maxWidth="sm" sx={{ height: "500px" }}>
       <CssBaseline />
 
-      <Card sx={{ minWidth: 275, marginTop: "60px" }}>
-        <CardContent></CardContent>
-
+      <Card sx={{ minWidth: 275, padding: "20px", marginTop: "40px" }}>
         <Typography
           variant="h2"
           component="h1"
@@ -41,7 +39,7 @@ export default function TodoList() {
         <ToggleButtonGroup
           exclusive
           aria-label="text"
-          sx={{ marginTop: "15px" }}
+          sx={{ marginTop: "15px",mb:"10px" }}
         >
           <ToggleButton value="left" aria-label="left aligned">
             غير منجز
@@ -54,70 +52,93 @@ export default function TodoList() {
           </ToggleButton>
         </ToggleButtonGroup>
 
-        <Grid
-          container
-          spacing={2}
-          sx={{ display: "flex", alignItems: "center" }}
+        {/* بطاقة المهمة بتصميم ولون متناسق خاص بها */}
+        <Card
+          sx={{
+            bgcolor: "#283593", // لون خلفية أزرق عميق وراقي للمهمة
+            color: "white",
+            p: 2, // مساحة داخلية مريحة
+            mb: 3, // مسافة فاصلة عن حقل الإدخال أسفلها
+            borderRadius: "12px", // حواف دائرية عصرية
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)", // ظل خفيف يبرز البطاقة عن الخلفية
+          }}
         >
-          <Grid
-            size={4}
-            sx={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <DeleteIcon
-              sx={{
-                background: "White",
-                color: "red",
-                border: "solid 3px red",
-                borderRadius: "100%",
-              }}
-            ></DeleteIcon>
-            <EditOutlinedIcon
-              sx={{
-                background: "White",
-                color: "blue",
-                border: "solid 3px blue",
-                borderRadius: "100%",
-              }}
-            ></EditOutlinedIcon>
-            <DoneOutlinedIcon
-              sx={{
-                background: "White",
-                color: "green",
-                border: "solid 3px green",
-                borderRadius: "100%",
-              }}
-            ></DoneOutlinedIcon>
-          </Grid>
-          <Grid size={8}>
-            <Typography
-              variant="h4"
-              component="h1"
-              sx={{
-                color: "black !important",
-                display: "flex",
-                justifyContent: "end",
-              }}
+          <Grid container spacing={2} sx={{ alignItems: "center" }}>
+            {/* قسم الأيقونات (حذف، تعديل، إنجاز) */}
+            <Grid
+              size={4}
+              sx={{ display: "flex", justifyContent: "space-between" }}
             >
-              :المهمة
-            </Typography>
-            <p>شرح المهمة</p>
+              <DeleteIcon
+                sx={{
+                  background: "white",
+                  color: "red",
+                  border: "solid 2px red",
+                  borderRadius: "50%",
+                  padding: "4px",
+                  cursor: "pointer",
+                }}
+              />
+              <EditOutlinedIcon
+                sx={{
+                  background: "white",
+                  color: "blue",
+                  border: "solid 2px blue",
+                  borderRadius: "50%",
+                  padding: "4px",
+                  cursor: "pointer",
+                }}
+              />
+              <DoneOutlinedIcon
+                sx={{
+                  background: "white",
+                  color: "green",
+                  border: "solid 2px green",
+                  borderRadius: "50%",
+                  padding: "4px",
+                  cursor: "pointer",
+                }}
+              />
+            </Grid>
+
+            {/* قسم النصوص (عنوان المهمة وشرحها) */}
+            <Grid size={8} sx={{ textAlign: "right" }}>
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: "bold", color: "#ffffff" }}
+              >
+                المهمة:
+              </Typography>
+              
+            </Grid>
           </Grid>
-        </Grid>
-        <div sx={{display:"flex", alignItems:"left"}}>
-          <Typography
-            variant="h4"
-            component="h1"
-            sx={{
-              color: "black !important",
-              display: "flex",
-              justifyContent: "end",
-              marginTop: "15px",
-            }}
+        </Card>
+        <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+          <Grid
+            container
+            spacing={2}
+            sx={{ width: "100%", alignItems: "center" }}
           >
-            :اضافة مهمة
-          </Typography>
-          <TextField id="outlined-basic" label="Task" variant="outlined" />
-        </div>
+            <Grid size={8}>
+              <TextField
+                fullWidth
+                id="outlined-basic"
+                label="عنوان المهمة الجديدة"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid size={4}>
+              <Button
+                variant="contained"
+                color="success"
+                fullWidth
+                sx={{ height: "56px", fontSize: "1rem" }}
+              >
+                اضافة
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
       </Card>
     </Container>
   );
