@@ -19,32 +19,47 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Todo from "./components/Todo";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-const todos =[
+import { useState } from "react";
+
+const initialTodos = [
   {
-    id:uuidv4(),
-    title:" قراءة كتاب",
-    description:" نيتبنت تن سيت",
-    isCompleted:false
+    id: uuidv4(),
+    title: " قراءة كتاب",
+    description: " نيتبنت تن سيت",
+    isCompleted: false,
   },
   {
-    id:uuidv4(),
-    title:" قراءة كتاب",
-    description:" نيتبنت تن سيت",
-    isCompleted:false
+    id: uuidv4(),
+    title: " قراءة كتاب",
+    description: " نيتبنت تن سيت",
+    isCompleted: false,
   },
   {
-    id:uuidv4(),
-    title:" قراءة كتاب",
-    description:" نيتبنت تن سيت",
-    isCompleted:false
-  }
-]
+    id: uuidv4(),
+    title: " قراءة كتاب",
+    description: " نيتبنت تن سيت",
+    isCompleted: false,
+  },
+];
 export default function TodoList() {
-  const todoJsx = todos.map((t) =>{
-    return<Todo key={t.id} title={t.title} description={t.description}/>
-  })
+  const [todos, setTodos] = useState(initialTodos);
+  const todoJsx = todos.map((t) => {
+    return <Todo key={t.id} title={t.title} description={t.description} />;
+  });
+  const [titleInput ,setTitleInput] = useState("");
+
+    function handleAddClic(){
+      const newTodo = {
+        id:uuidv4(),
+        title:titleInput,
+        description:"",
+        isCompleted:false,
+      };
+      setTodos([...todos,newTodo])
+      setTitleInput("");
+    }
   return (
     <Container maxWidth="sm" sx={{ height: "500px" }}>
       <CssBaseline />
@@ -65,15 +80,27 @@ export default function TodoList() {
         <ToggleButtonGroup
           exclusive
           aria-label="text"
-          sx={{ marginTop: "15px",mb:"10px" }}
+          sx={{ marginTop: "15px", mb: "10px" }}
         >
-          <ToggleButton value="left" aria-label="left aligned" sx={{fontSize:"22px"}}>
+          <ToggleButton
+            value="left"
+            aria-label="left aligned"
+            sx={{ fontSize: "22px" }}
+          >
             غير منجز
           </ToggleButton>
-          <ToggleButton value="center" aria-label="centered" sx={{fontSize:"22px"}}>
+          <ToggleButton
+            value="center"
+            aria-label="centered"
+            sx={{ fontSize: "22px" }}
+          >
             منجز
           </ToggleButton>
-          <ToggleButton value="right" aria-label="right aligned" sx={{fontSize:"22px"}}>
+          <ToggleButton
+            value="right"
+            aria-label="right aligned"
+            sx={{ fontSize: "22px" }}
+          >
             الكل
           </ToggleButton>
         </ToggleButtonGroup>
@@ -91,6 +118,17 @@ export default function TodoList() {
                 id="outlined-basic"
                 label="عنوان المهمة الجديدة"
                 variant="outlined"
+                value={titleInput}
+                onChange={(e) =>{
+                  setTitleInput(e.target.value)
+                }}
+                onKeyDown={(e)=>{
+                  if(e.key ==="Enter")
+                  {
+
+                    handleAddClic()
+                  }
+                }}
               />
             </Grid>
             <Grid size={4}>
@@ -98,7 +136,10 @@ export default function TodoList() {
                 variant="contained"
                 color="success"
                 fullWidth
-                sx={{ height: "56px", fontSize: "1rem" }}
+                sx={{ height: "56px", fontSize: "1rem" }}                
+                onClick={()=>{
+                  handleAddClic()
+                }}
               >
                 اضافة
               </Button>
