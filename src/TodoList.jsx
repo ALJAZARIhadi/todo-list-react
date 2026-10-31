@@ -67,13 +67,13 @@ export default function TodoList() {
           aria-label="text"
           sx={{ marginTop: "15px",mb:"10px" }}
         >
-          <ToggleButton value="left" aria-label="left aligned">
+          <ToggleButton value="left" aria-label="left aligned" sx={{fontSize:"22px"}}>
             غير منجز
           </ToggleButton>
-          <ToggleButton value="center" aria-label="centered">
+          <ToggleButton value="center" aria-label="centered" sx={{fontSize:"22px"}}>
             منجز
           </ToggleButton>
-          <ToggleButton value="right" aria-label="right aligned">
+          <ToggleButton value="right" aria-label="right aligned" sx={{fontSize:"22px"}}>
             الكل
           </ToggleButton>
         </ToggleButtonGroup>

@@ -31,6 +31,8 @@ export default function Todo({title,description}) {
               sx={{
                 background: "white",
                 color: "red",
+                width:"39px",
+                height:"39px",
                 border: "solid 2px red",
                 borderRadius: "50%",
                 padding: "4px",
@@ -42,6 +44,8 @@ export default function Todo({title,description}) {
                 background: "white",
                 color: "blue",
                 border: "solid 2px blue",
+                width:"39px",
+                height:"39px",
                 borderRadius: "50%",
                 padding: "4px",
                 cursor: "pointer",
@@ -51,6 +55,8 @@ export default function Todo({title,description}) {
               sx={{
                 background: "white",
                 color: "green",
+                width:"39px",
+                height:"39px",
                 border: "solid 2px green",
                 borderRadius: "50%",
                 padding: "4px",
