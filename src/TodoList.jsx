@@ -19,8 +19,32 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Todo from "./components/Todo";
+import { v4 as uuidv4 } from 'uuid';
 
+const todos =[
+  {
+    id:uuidv4(),
+    title:" قراءة كتاب",
+    description:" نيتبنت تن سيت",
+    isCompleted:false
+  },
+  {
+    id:uuidv4(),
+    title:" قراءة كتاب",
+    description:" نيتبنت تن سيت",
+    isCompleted:false
+  },
+  {
+    id:uuidv4(),
+    title:" قراءة كتاب",
+    description:" نيتبنت تن سيت",
+    isCompleted:false
+  }
+]
 export default function TodoList() {
+  const todoJsx = todos.map((t) =>{
+    return<Todo key={t.id} title={t.title} description={t.description}/>
+  })
   return (
     <Container maxWidth="sm" sx={{ height: "500px" }}>
       <CssBaseline />
@@ -54,7 +78,7 @@ export default function TodoList() {
           </ToggleButton>
         </ToggleButtonGroup>
 
-        <Todo/>
+        {todoJsx}
         <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
           <Grid
             container

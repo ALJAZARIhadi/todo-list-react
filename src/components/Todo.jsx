@@ -4,10 +4,10 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
+import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";``
 
 
-export default function Todo() {
+export default function Todo({title,description}) {
   return (
     <>
       {/* بطاقة المهمة بتصميم ولون متناسق خاص بها */}
@@ -65,7 +65,10 @@ export default function Todo() {
               variant="h5"
               sx={{ fontWeight: "bold", color: "#ffffff" }}
             >
-              المهمة:
+             {title}
+            </Typography>
+            <Typography variant="h6">
+              {description}
             </Typography>
           </Grid>
         </Grid>
