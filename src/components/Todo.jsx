@@ -4,10 +4,16 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";``
+import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
+``;
 
+export default function Todo({ todo , handleFunc}) {
 
-export default function Todo({title,description}) {
+  function handleDoneClick()
+  {
+    handleFunc(todo.id);
+  }
+  
   return (
     <>
       {/* بطاقة المهمة بتصميم ولون متناسق خاص بها */}
@@ -27,55 +33,71 @@ export default function Todo({title,description}) {
             size={4}
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
-            <DeleteIcon
-              sx={{
-                background: "white",
-                color: "red",
-                width:"39px",
-                height:"39px",
-                border: "solid 2px red",
-                borderRadius: "50%",
-                padding: "4px",
-                cursor: "pointer",
-              }}
-            />
-            <EditOutlinedIcon
-              sx={{
-                background: "white",
-                color: "blue",
-                border: "solid 2px blue",
-                width:"39px",
-                height:"39px",
-                borderRadius: "50%",
-                padding: "4px",
-                cursor: "pointer",
-              }}
-            />
-            <DoneOutlinedIcon
-              sx={{
-                background: "white",
-                color: "green",
-                width:"39px",
-                height:"39px",
-                border: "solid 2px green",
-                borderRadius: "50%",
-                padding: "4px",
-                cursor: "pointer",
-              }}
-            />
+            <span>
+              <DeleteIcon
+                sx={{
+                  background: "white",
+                  color: "red",
+                  width: "39px",
+                  height: "39px",
+                  border: "solid 2px red",
+                  borderRadius: "50%",
+                  padding: "4px",
+                  cursor: "pointer", // تجعل شكل الماوس يتبدل إلى يد عند الوقوف على الأيقونة
+                  "&:hover": {
+                    opacity: 0.8, // تأثير بصري خفيف عند مرور الماوس
+                    scale: 1.23,
+                  },
+                }}
+              />
+            </span>{" "}
+            <span>
+              <EditOutlinedIcon
+                sx={{
+                  background: "white",
+                  color: "blue",
+                  border: "solid 2px blue",
+                  width: "39px",
+                  height: "39px",
+                  borderRadius: "50%",
+                  padding: "4px",
+                  cursor: "pointer", // تجعل شكل الماوس يتبدل إلى يد عند الوقوف على الأيقونة
+                  "&:hover": {
+                    opacity: 0.8,
+                    scale: 1.23, // تأثير بصري خفيف عند مرور الماوس
+                  },
+                }}
+              />
+            </span>
+            <span onClick={handleDoneClick}>
+              <DoneOutlinedIcon
+                sx={{
+                  background: todo.isCompleted ? "#8bc34a" :"white",
+                  color:  todo.isCompleted ? "white" :"#8bc34a",
+                  width: "39px",
+                  height: "39px",
+                  border: "solid 2px green",
+                  borderRadius: "50%",
+                  padding: "4px",
+                  cursor: "pointer", // تجعل شكل الماوس يتبدل إلى يد عند الوقوف على الأيقونة
+                  "&:hover": {
+                    opacity: 0.8, // تأثير بصري خفيف عند مرور الماوس
+                    scale: 1.23,
+                  },
+                }}
+              />
+            </span>
           </Grid>
 
           {/* قسم النصوص (عنوان المهمة وشرحها) */}
           <Grid size={8} sx={{ textAlign: "right" }}>
             <Typography
               variant="h5"
-              sx={{ fontWeight: "bold", color: "#ffffff" }}
+              sx={{ fontWeight: "bold", color: "#ffffff" , textDecoration: todo.isCompleted ? "line-through" : "normal"}}
             >
-             {title}
+              {todo.title}
             </Typography>
-            <Typography variant="h6">
-              {description}
-            </Typography>
+            <Typography variant="h6">{todo.description}</Typography>
           </Grid>
         </Grid>
       </Card>
