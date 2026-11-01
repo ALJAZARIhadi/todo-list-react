@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 /* MUI components */
-
+import { TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -35,6 +35,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function Todo({ todo }) {
   const { todos, setTodos } = useContext(TodosContext);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [updatedTodo, setUpdatedTodo] = useState({
+    title: todo.title,
+    description: todo.description ,
+  });
   // Event handlers
   function handleDoneClick() {
     const updatedTodos = todos.map((t) => {
@@ -46,8 +51,14 @@ export default function Todo({ todo }) {
   function handleDeleteClick() {
     setShowDeleteDialog(true);
   }
+  function handleEditClicK() {
+    setShowEditDialog(true);
+  }
   function handleClose() {
     setShowDeleteDialog(false);
+  }
+  function handleCloseEdit() {
+    setShowEditDialog(false);
   }
   function handleDeleteConfirm() {
     const updatedTodos = todos.filter((t) => {
@@ -55,10 +66,22 @@ export default function Todo({ todo }) {
     });
     setTodos(updatedTodos);
   }
+
+  function handleEditConfirm() {
+    const updatedTodos = todos.map((t) => {
+      if (t.id == todo.id) {
+        return { ...t, title: updatedTodo.title, description: updatedTodo.description };
+      } else {
+        return t;
+      }
+    });
+    setTodos(updatedTodos);
+    setShowEditDialog(false)
+  }
   //=====End Events Handlers
   return (
     <>
-      {/*Dialog */}
+      {/*Delete Dialog  */}
       <Dialog
         style={{ direction: "rtl" }}
         open={showDeleteDialog}
@@ -85,7 +108,60 @@ export default function Todo({ todo }) {
           <Button onClick={handleDeleteConfirm}>نعم , تاكيد</Button>
         </DialogActions>
       </Dialog>
-      {/*=======End of Dialog */}
+      {/*=======End of Delete Dialog */}
+
+      {/*Edit Dialog -=========- */}
+      <Dialog
+        style={{ direction: "rtl" }}
+        open={showEditDialog}
+        slots={{
+          transition: Transition,
+        }}
+        keepMounted
+        onClose={handleCloseEdit}
+        aria-describedby="alert-dialog-slide-description"
+        role="alertdialog"
+      >
+        <DialogTitle sx={{ color: "black !important" }}>
+          تعديل المهمة
+        </DialogTitle>
+        <DialogContent style={{ direction: "rtl" }}>
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="title"
+            label="عنوان المهمة"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={updatedTodo.title} // <-- هنا التعديل المهم
+            onChange={(e) => {
+              setUpdatedTodo({ ...updatedTodo, title: e.target.value });
+            }}
+          />
+
+          <TextField
+            margin="dense"
+            id="description"
+            label="وصف المهمة"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={updatedTodo.description} // <-- هنا التعديل المهم
+            onChange={(e) => {
+              setUpdatedTodo({ ...updatedTodo, description: e.target.value });
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseEdit} autoFocus>
+            لا
+          </Button>
+          <Button onClick={handleEditConfirm}>نعم , تاكيد</Button>
+        </DialogActions>
+      </Dialog>
+      {/*=======End of Edit Dialog */}
       {/* بطاقة المهمة بتصميم ولون متناسق خاص بها */}
       <Card
         sx={{
@@ -121,7 +197,7 @@ export default function Todo({ todo }) {
                 }}
               />
             </span>{" "}
-            <span>
+            <span onClick={handleEditClicK}>
               <EditOutlinedIcon
                 sx={{
                   background: "white",
