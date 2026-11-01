@@ -51,11 +51,7 @@ export default function Todo({ todo }) {
   }
   function handleDeleteConfirm() {
     const updatedTodos = todos.filter((t) => {
-      if (t.id == todo.id) {
-        return false;
-      } else {
-        return true;
-      }
+      return t.id != todo.id;
     });
     setTodos(updatedTodos);
   }
@@ -63,7 +59,8 @@ export default function Todo({ todo }) {
   return (
     <>
       {/*Dialog */}
-      <Dialog style={{direction:"rtl"}}
+      <Dialog
+        style={{ direction: "rtl" }}
         open={showDeleteDialog}
         slots={{
           transition: Transition,
@@ -73,10 +70,12 @@ export default function Todo({ todo }) {
         aria-describedby="alert-dialog-slide-description"
         role="alertdialog"
       >
-        <DialogTitle sx={{color:"black !important"}}>هل تريد حذف هذه المهمة</DialogTitle>
+        <DialogTitle sx={{ color: "black !important" }}>
+          هل تريد حذف هذه المهمة
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            لن تتمكن من استرداد هذه المهمة اذا حذفتها 
+            لن تتمكن من استرداد هذه المهمة اذا حذفتها
           </DialogContentText>
         </DialogContent>
         <DialogActions>
