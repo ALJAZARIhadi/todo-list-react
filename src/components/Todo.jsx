@@ -5,15 +5,19 @@ import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
-``;
+import { useContext } from "react";
+import { TodosContext } from "../contexts/todosContext";
 
-export default function Todo({ todo , handleFunc}) {
-
-  function handleDoneClick()
-  {
-    handleFunc(todo.id);
+export default function Todo({ todo, handleFunc }) {
+  const { todos, setTodos } = useContext(TodosContext);
+  function handleDoneClick() {
+    const updatedTodos = todos.map((t) => {
+          if (t.id == todo.id) t.isCompleted = !t.isCompleted;
+          return t;
+        });
+        setTodos(updatedTodos);
   }
-  
+
   return (
     <>
       {/* بطاقة المهمة بتصميم ولون متناسق خاص بها */}
@@ -72,8 +76,8 @@ export default function Todo({ todo , handleFunc}) {
             <span onClick={handleDoneClick}>
               <DoneOutlinedIcon
                 sx={{
-                  background: todo.isCompleted ? "#8bc34a" :"white",
-                  color:  todo.isCompleted ? "white" :"#8bc34a",
+                  background: todo.isCompleted ? "#8bc34a" : "white",
+                  color: todo.isCompleted ? "white" : "#8bc34a",
                   width: "39px",
                   height: "39px",
                   border: "solid 2px green",
@@ -93,7 +97,11 @@ export default function Todo({ todo , handleFunc}) {
           <Grid size={8} sx={{ textAlign: "right" }}>
             <Typography
               variant="h5"
-              sx={{ fontWeight: "bold", color: "#ffffff" , textDecoration: todo.isCompleted ? "line-through" : "normal"}}
+              sx={{
+                fontWeight: "bold",
+                color: "#ffffff",
+                textDecoration: todo.isCompleted ? "line-through" : "normal",
+              }}
             >
               {todo.title}
             </Typography>

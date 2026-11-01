@@ -1,18 +1,43 @@
-import "./App.css";
-import TodoList from "./TodoList";
+import { TodosContext } from "./contexts/todosContext";
+import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
+import TodoList from "./TodoList"
+const initialTodos = [
+  {
+    id: uuidv4(),
+    title: " قراءة كتاب",
+    description: " نيتبنت تن سيت",
+    isCompleted: false,
+  },
+  {
+    id: uuidv4(),
+    title: " قراءة كتاب",
+    description: " نيتبنت تن سيت",
+    isCompleted: false,
+  },
+  {
+    id: uuidv4(),
+    title: " قراءة كتاب",
+    description: " نيتبنت تن سيت",
+    isCompleted: false,
+  },
+];
 
 function App() {
+  const [todos, setTodos] = useState(initialTodos);
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh", // trying to understand 
+        minHeight: "100vh", // trying to understand
         background: "grey",
       }}
     >
-      <TodoList />  
+      <TodosContext.Provider value={{todos,setTodos}}>
+        <TodoList />
+      </TodosContext.Provider>
     </div>
   );
 }

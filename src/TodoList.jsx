@@ -20,55 +20,29 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Todo from "./components/Todo";
 import { v4 as uuidv4 } from "uuid";
-
 import { useState } from "react";
+import { useContext } from "react";
+import { TodosContext } from "./contexts/todosContext";
 
-const initialTodos = [
-  {
-    id: uuidv4(),
-    title: " قراءة كتاب",
-    description: " نيتبنت تن سيت",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: " قراءة كتاب",
-    description: " نيتبنت تن سيت",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: " قراءة كتاب",
-    description: " نيتبنت تن سيت",
-    isCompleted: false,
-  },
-];
 export default function TodoList() {
-  const [todos, setTodos] = useState(initialTodos);
-    function handleCheckClick(todoId){
-      const updatedTodos = todos.map((t) =>{
-        if(t.id == todoId)
-          t.isCompleted =!t.isCompleted
-        return t;
-      });
-      setTodos(updatedTodos);
-    }
-    
-  const todoJsx = todos.map((t) => {
-    return <Todo key={t.id} todo={t} handleFunc={handleCheckClick} />;
-  });
-  const [titleInput ,setTitleInput] = useState("");
+  const { todos, setTodos } = useContext(TodosContext);
+  
 
-    function handleAddClic(){
-      const newTodo = {
-        id:uuidv4(),
-        title:titleInput,
-        description:"",
-        isCompleted:false,
-      };
-      setTodos([...todos,newTodo])
-      setTitleInput("");
-    }
+  const todoJsx = todos.map((t) => {
+    return <Todo key={t.id} todo={t}  />;
+  });
+  const [titleInput, setTitleInput] = useState("");
+
+  function handleAddClic() {
+    const newTodo = {
+      id: uuidv4(),
+      title: titleInput,
+      description: "",
+      isCompleted: false,
+    };
+    setTodos([...todos, newTodo]);
+    setTitleInput("");
+  }
   return (
     <Container maxWidth="sm" sx={{ height: "500px" }}>
       <CssBaseline />
@@ -128,14 +102,12 @@ export default function TodoList() {
                 label="عنوان المهمة الجديدة"
                 variant="outlined"
                 value={titleInput}
-                onChange={(e) =>{
-                  setTitleInput(e.target.value)
+                onChange={(e) => {
+                  setTitleInput(e.target.value);
                 }}
-                onKeyDown={(e)=>{
-                  if(e.key ==="Enter")
-                  {
-
-                    handleAddClic()
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleAddClic();
                   }
                 }}
               />
@@ -145,9 +117,9 @@ export default function TodoList() {
                 variant="contained"
                 color="success"
                 fullWidth
-                sx={{ height: "56px", fontSize: "1rem" }}                
-                onClick={()=>{
-                  handleAddClic()
+                sx={{ height: "56px", fontSize: "1rem" }}
+                onClick={() => {
+                  handleAddClic();
                 }}
               >
                 اضافة
