@@ -1,25 +1,92 @@
 import * as React from "react";
+import { useState } from "react";
+/* MUI components */
+
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
+
+/*======End of MUI components */
+
+/* Context */
 import { useContext } from "react";
 import { TodosContext } from "../contexts/todosContext";
+/*==== End of Context */
 
-export default function Todo({ todo, handleFunc }) {
+/* Dialog */
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import { TurnLeft } from "@mui/icons-material";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+/* ========= End of Dialog */
+
+export default function Todo({ todo }) {
   const { todos, setTodos } = useContext(TodosContext);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  // Event handlers
   function handleDoneClick() {
     const updatedTodos = todos.map((t) => {
-          if (t.id == todo.id) t.isCompleted = !t.isCompleted;
-          return t;
-        });
-        setTodos(updatedTodos);
+      if (t.id == todo.id) t.isCompleted = !t.isCompleted;
+      return t;
+    });
+    setTodos(updatedTodos);
   }
-
+  function handleDeleteClick() {
+    setShowDeleteDialog(true);
+  }
+  function handleClose() {
+    setShowDeleteDialog(false);
+  }
+  function handleDeleteConfirm() {
+    const updatedTodos = todos.filter((t) => {
+      if (t.id == todo.id) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    setTodos(updatedTodos);
+  }
+  //=====End Events Handlers
   return (
     <>
+      {/*Dialog */}
+      <Dialog style={{direction:"rtl"}}
+        open={showDeleteDialog}
+        slots={{
+          transition: Transition,
+        }}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+        role="alertdialog"
+      >
+        <DialogTitle sx={{color:"black !important"}}>هل تريد حذف هذه المهمة</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            لن تتمكن من استرداد هذه المهمة اذا حذفتها 
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            لا
+          </Button>
+          <Button onClick={handleDeleteConfirm}>نعم , تاكيد</Button>
+        </DialogActions>
+      </Dialog>
+      {/*=======End of Dialog */}
       {/* بطاقة المهمة بتصميم ولون متناسق خاص بها */}
       <Card
         sx={{
@@ -37,7 +104,7 @@ export default function Todo({ todo, handleFunc }) {
             size={4}
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
-            <span>
+            <span onClick={handleDeleteClick}>
               <DeleteIcon
                 sx={{
                   background: "white",
