@@ -38,7 +38,7 @@ export default function Todo({ todo }) {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [updatedTodo, setUpdatedTodo] = useState({
     title: todo.title,
-    description: todo.description ,
+    description: todo.description,
   });
   // Event handlers
   function handleDoneClick() {
@@ -47,6 +47,7 @@ export default function Todo({ todo }) {
       return t;
     });
     setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos)); 
   }
   function handleDeleteClick() {
     setShowDeleteDialog(true);
@@ -65,18 +66,24 @@ export default function Todo({ todo }) {
       return t.id != todo.id;
     });
     setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
   }
 
   function handleEditConfirm() {
     const updatedTodos = todos.map((t) => {
       if (t.id == todo.id) {
-        return { ...t, title: updatedTodo.title, description: updatedTodo.description };
+        return {
+          ...t,
+          title: updatedTodo.title,
+          description: updatedTodo.description,
+        };
       } else {
         return t;
       }
     });
     setTodos(updatedTodos);
-    setShowEditDialog(false)
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    setShowEditDialog(false);
   }
   //=====End Events Handlers
   return (

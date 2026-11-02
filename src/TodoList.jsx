@@ -2,37 +2,47 @@ import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
-import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
-import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Todo from "./components/Todo";
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { TodosContext } from "./contexts/todosContext";
 
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
-  
+  const [displayTodosType, setDisplayTodosType] = useState("all");
 
-  const todoJsx = todos.map((t) => {
-    return <Todo key={t.id} todo={t}  />;
+  const completed = todos.filter((t) => {
+    return t.isCompleted;
+  });
+  const notCompleted = todos.filter((t) => {
+    return !t.isCompleted;
+  });
+
+  let TodoToBeRender = todos;
+  if (displayTodosType == "completed") {
+    TodoToBeRender = completed;
+  } else if (displayTodosType == "non-Completed") {
+    TodoToBeRender = notCompleted;
+  } else {
+    TodoToBeRender = todos;
+  }
+
+  const todoJsx = TodoToBeRender.map((t) => {
+    return <Todo key={t.id} todo={t} />;
   });
   const [titleInput, setTitleInput] = useState("");
 
+  function changeDisplayType(e) {
+    //console.log(e.target.value)
+    setDisplayTodosType(e.target.value);
+  }
   function handleAddClic() {
     const newTodo = {
       id: uuidv4(),
@@ -40,18 +50,25 @@ export default function TodoList() {
       description: "",
       isCompleted: false,
     };
-    const updatedTodo = [...todos, newTodo]
-    setTodos(updatedTodo);
-    localStorage.setItem('todos',JSON.stringify(updatedTodo));
+    const updatedTodos = [...todos, newTodo];
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setTitleInput("");
   }
-  //const strogeTodos =localStorage.getItem('todos')
-  //setTodos(strogeTodos)
+  useEffect(() => {
+    console.log("first");
+    const storageTodos = JSON.parse(localStorage.getItem("todos"));
+    setTodos(storageTodos);
+  }, []);
+
   return (
-    <Container maxWidth="sm" sx={{ height: "500px" }}>
+    <Container maxWidth="sm" sx={{ height: "500px"  }}>
       <CssBaseline />
 
-      <Card sx={{ minWidth: 275, padding: "20px", marginTop: "40px" }}>
+      <Card
+        sx={{ minWidth: 275, padding: "20px", marginTop: "40px" }}
+        style={{ maxHeight: "80vh", overflow: "scroll" , borderRadius:"25px" }}
+      >
         <Typography
           variant="h2"
           component="h1"
@@ -67,24 +84,26 @@ export default function TodoList() {
         <ToggleButtonGroup
           exclusive
           aria-label="text"
+          value={displayTodosType}
           sx={{ marginTop: "15px", mb: "10px" }}
+          onChange={changeDisplayType}
         >
           <ToggleButton
-            value="left"
+            value="non-Completed"
             aria-label="left aligned"
             sx={{ fontSize: "22px" }}
           >
             غير منجز
           </ToggleButton>
           <ToggleButton
-            value="center"
+            value="completed"
             aria-label="centered"
             sx={{ fontSize: "22px" }}
           >
             منجز
           </ToggleButton>
           <ToggleButton
-            value="right"
+            value="all"
             aria-label="right aligned"
             sx={{ fontSize: "22px" }}
           >
@@ -125,6 +144,7 @@ export default function TodoList() {
                 onClick={() => {
                   handleAddClic();
                 }}
+                disabled={titleInput <=0}
               >
                 اضافة
               </Button>
