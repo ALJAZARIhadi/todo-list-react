@@ -17,7 +17,7 @@ import { TodosContext } from "./contexts/todosContext";
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
   const [displayTodosType, setDisplayTodosType] = useState("all");
-
+  //filtering the todos
   const completed = todos.filter((t) => {
     return t.isCompleted;
   });
@@ -57,7 +57,7 @@ export default function TodoList() {
   }
   useEffect(() => {
     console.log("first");
-    const storageTodos = JSON.parse(localStorage.getItem("todos"));
+    const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
     setTodos(storageTodos);
   }, []);
 

@@ -2,22 +2,23 @@ import { TodosContext } from "./contexts/todosContext";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import TodoList from "./TodoList"
+
 const initialTodos = [
   {
     id: uuidv4(),
-    title: " قراءة كتاب",
+    title: " 1قراءة كتاب",
     description: " نيتبنت تن سيت",
     isCompleted: false,
   },
   {
     id: uuidv4(),
-    title: " قراءة كتاب",
+    title: " 2قراءة كتاب",
     description: " نيتبنت تن سيت",
     isCompleted: false,
   },
   {
     id: uuidv4(),
-    title: " قراءة كتاب",
+    title: " 3قراءة كتاب",
     description: " نيتبنت تن سيت",
     isCompleted: false,
   },
@@ -31,8 +32,8 @@ function App() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh", // trying to understand
-        background: "grey",
+        minHeight: "110vh", // trying to understand
+        background: "#1e1e2f",
       }}
     >
       <TodosContext.Provider value={{todos,setTodos}}>
