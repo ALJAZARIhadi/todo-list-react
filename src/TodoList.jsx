@@ -40,9 +40,13 @@ export default function TodoList() {
       description: "",
       isCompleted: false,
     };
-    setTodos([...todos, newTodo]);
+    const updatedTodo = [...todos, newTodo]
+    setTodos(updatedTodo);
+    localStorage.setItem('todos',JSON.stringify(updatedTodo));
     setTitleInput("");
   }
+  //const strogeTodos =localStorage.getItem('todos')
+  //setTodos(strogeTodos)
   return (
     <Container maxWidth="sm" sx={{ height: "500px" }}>
       <CssBaseline />
