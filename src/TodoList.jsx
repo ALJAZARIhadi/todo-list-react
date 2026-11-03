@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Todo from "./components/Todo";
 import { v4 as uuidv4 } from "uuid";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect,useMemo } from "react";
 import { TodosContext } from "./contexts/todosContext";
 
 export default function TodoList() {
