@@ -11,19 +11,27 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Todo from "./components/Todo";
 import { v4 as uuidv4 } from "uuid";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useMemo } from "react";
 import { TodosContext } from "./contexts/todosContext";
 
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
   const [displayTodosType, setDisplayTodosType] = useState("all");
   //filtering the todos
-  const completed = todos.filter((t) => {
+ 
+  const completed =  useMemo(()=>{
+    return todos.filter((t) => {
+    console.log("completed calculated");
     return t.isCompleted;
   });
-  const notCompleted = todos.filter((t) => {
-    return !t.isCompleted;
-  });
+  },[todos])
+
+  const notCompleted = useMemo(() => {
+    return todos.filter((t) => {
+      console.log("not completed calculated");
+      return !t.isCompleted;
+    });
+  }, [todos]);
 
   let TodoToBeRender = todos;
   if (displayTodosType == "completed") {
@@ -62,12 +70,12 @@ export default function TodoList() {
   }, []);
 
   return (
-    <Container maxWidth="sm" sx={{ height: "500px"  }}>
+    <Container maxWidth="sm" sx={{ height: "500px" }}>
       <CssBaseline />
 
       <Card
         sx={{ minWidth: 275, padding: "20px", marginTop: "40px" }}
-        style={{ maxHeight: "80vh", overflow: "scroll" , borderRadius:"25px" }}
+        style={{ maxHeight: "80vh", overflow: "scroll", borderRadius: "25px" }}
       >
         <Typography
           variant="h2"
@@ -144,7 +152,7 @@ export default function TodoList() {
                 onClick={() => {
                   handleAddClic();
                 }}
-                disabled={titleInput <=0}
+                disabled={titleInput <= 0}
               >
                 اضافة
               </Button>
