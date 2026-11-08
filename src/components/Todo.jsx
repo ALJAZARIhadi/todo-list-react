@@ -32,13 +32,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 /* ========= End of Dialog */
 
-export default function Todo({ todo , showDialog }) {
+export default function Todo({ todo , showDialog , showUpdateDialog }) {
   const { todos, setTodos } = useContext(TodosContext);
-  const [showEditDialog, setShowEditDialog] = useState(false);
-  const [updatedTodo, setUpdatedTodo] = useState({
-    title: todo.title,
-    description: todo.description,
-  });
+  /* const [updatedTodo, setUpdatedTodo] = useState({
+    title: passTodo.title,
+    description: passTodo.description,
+  }); */
   // Event handlers
   function handleDoneClick() {
     const updatedTodos = todos.map((t) => {
@@ -50,91 +49,16 @@ export default function Todo({ todo , showDialog }) {
   }
   
   function handleEditClicK() {
-    setShowEditDialog(true);
-  }
-  
-  function handleCloseEdit() {
-    setShowEditDialog(false);
+    showUpdateDialog(todo)
   }
 
   function handleDeleteClick() {
     showDialog(todo)
   }
- 
-
-  function handleEditConfirm() {
-    const updatedTodos = todos.map((t) => {
-      if (t.id == todo.id) {
-        return {
-          ...t,
-          title: updatedTodo.title,
-          description: updatedTodo.description,
-        };
-      } else {
-        return t;
-      }
-    });
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
-    setShowEditDialog(false);
-  }
   //=====End Events Handlers
   return (
     <>
-      
 
-      {/*Edit Dialog -=========- */}
-      <Dialog
-        style={{ direction: "rtl" }}
-        open={showEditDialog}
-        slots={{
-          transition: Transition,
-        }}
-        keepMounted
-        onClose={handleCloseEdit}
-        aria-describedby="alert-dialog-slide-description"
-        role="alertdialog"
-      >
-        <DialogTitle sx={{ color: "black !important" }}>
-          تعديل المهمة
-        </DialogTitle>
-        <DialogContent style={{ direction: "rtl" }}>
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="title"
-            label="عنوان المهمة"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={updatedTodo.title} // <-- هنا التعديل المهم
-            onChange={(e) => {
-              setUpdatedTodo({ ...updatedTodo, title: e.target.value });
-            }}
-          />
-
-          <TextField
-            margin="dense"
-            id="description"
-            label="وصف المهمة"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={updatedTodo.description} // <-- هنا التعديل المهم
-            onChange={(e) => {
-              setUpdatedTodo({ ...updatedTodo, description: e.target.value });
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseEdit} autoFocus>
-            لا
-          </Button>
-          <Button onClick={handleEditConfirm}>نعم , تاكيد</Button>
-        </DialogActions>
-      </Dialog>
-      {/*=======End of Edit Dialog */}
       {/* بطاقة المهمة بتصميم ولون متناسق خاص بها */}
       <Card
         sx={{

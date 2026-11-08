@@ -31,18 +31,20 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 /* ========= End of Dialog and slide intialise  */
 
 export default function TodoList() {
-  const [passTodo , setPassTodo] = useState(null) 
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [passTodo, setPassTodo] = useState({title:"" , description:""});
   const { todos, setTodos } = useContext(TodosContext);
   const [displayTodosType, setDisplayTodosType] = useState("all");
+
   //filtering the todos
- 
-  const completed =  useMemo(()=>{
+
+  const completed = useMemo(() => {
     return todos.filter((t) => {
-    console.log("completed calculated");
-    return t.isCompleted;
-  });
-  },[todos])
+      console.log("completed calculated");
+      return t.isCompleted;
+    });
+  }, [todos]);
 
   const notCompleted = useMemo(() => {
     return todos.filter((t) => {
@@ -60,13 +62,13 @@ export default function TodoList() {
     TodoToBeRender = todos;
   }
 
-  
   const [titleInput, setTitleInput] = useState("");
 
   function changeDisplayType(e) {
     //console.log(e.target.value)
     setDisplayTodosType(e.target.value);
   }
+  //=====Handlers
   function handleAddClic() {
     const newTodo = {
       id: uuidv4(),
@@ -85,13 +87,11 @@ export default function TodoList() {
     setTodos(storageTodos);
   }, []);
 
-  
-
   function handleClose() {
     setShowDeleteDialog(false);
   }
-
-   function handleDeleteConfirm() {
+  //=====Confirm handelrs
+  function handleDeleteConfirm() {
     const updatedTodos = todos.filter((t) => {
       return t.id != passTodo.id;
     });
@@ -100,16 +100,48 @@ export default function TodoList() {
     setShowDeleteDialog(false);
   }
 
-  function openDeleteDialog(todo){
+  function handleEditConfirm() {
+    const updatedTodos = todos.map((t) => {
+      if (t.id == passTodo.id) {
+        return {
+          ...t,
+          title: passTodo.title,
+          description: passTodo.description,
+        };
+      } else {
+        return t;
+      }
+    });
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    setShowEditDialog(false);
+  }
+  //=====Confirm handelrs end
+  function openDeleteDialog(todo) {
     setPassTodo(todo);
     setShowDeleteDialog(true);
   }
-   const todoJsx = TodoToBeRender.map((t) => {
-    return <Todo key={t.id} todo={t} showDialog={openDeleteDialog}/>;
+  function openUpdateDialog(todo) {
+    setPassTodo(todo);
+    setShowEditDialog(true);
+  }
+
+  function handleCloseEdit() {
+    setShowEditDialog(false);
+  }
+  const todoJsx = TodoToBeRender.map((t) => {
+    return (
+      <Todo
+        key={t.id}
+        todo={t}
+        showDialog={openDeleteDialog}
+        showUpdateDialog={openUpdateDialog}
+      />
+    );
   });
   return (
     <>
-    {/*Delete Dialog  */}
+      {/*Delete Dialog  */}
       <Dialog
         style={{ direction: "rtl" }}
         open={showDeleteDialog}
@@ -137,97 +169,160 @@ export default function TodoList() {
         </DialogActions>
       </Dialog>
       {/*=======End of Delete Dialog */}
-     <Container maxWidth="sm" sx={{ height: "500px" }}>
-      <CssBaseline />
 
-      <Card
-        sx={{ minWidth: 275, padding: "20px", marginTop: "40px" }}
-        style={{ maxHeight: "80vh", overflow: "scroll", borderRadius: "25px" }}
+      {/*Edit Dialog -=========- */}
+      <Dialog
+        style={{ direction: "rtl" }}
+        open={showEditDialog}
+        slots={{
+          transition: Transition,
+        }}
+        keepMounted
+        onClose={handleCloseEdit}
+        aria-describedby="alert-dialog-slide-description"
+        role="alertdialog"
       >
-        <Typography
-          variant="h2"
-          component="h1"
-          sx={{
-            color: "black !important",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          المهام اليومية
-        </Typography>
-
-        <ToggleButtonGroup
-          exclusive
-          aria-label="text"
-          value={displayTodosType}
-          sx={{ marginTop: "15px", mb: "10px" }}
-          onChange={changeDisplayType}
-        >
-          <ToggleButton
-            value="non-Completed"
-            aria-label="left aligned"
-            sx={{ fontSize: "22px" }}
-          >
-            غير منجز
-          </ToggleButton>
-          <ToggleButton
-            value="completed"
-            aria-label="centered"
-            sx={{ fontSize: "22px" }}
-          >
-            منجز
-          </ToggleButton>
-          <ToggleButton
-            value="all"
-            aria-label="right aligned"
-            sx={{ fontSize: "22px" }}
-          >
-            الكل
-          </ToggleButton>
-        </ToggleButtonGroup>
-
-        {todoJsx}
-        <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-          <Grid
-            container
-            spacing={2}
-            sx={{ width: "100%", alignItems: "center" }}
-          >
-            <Grid size={8}>
+        <DialogTitle sx={{ color: "black !important" }}>
+          تعديل المهمة
+        </DialogTitle>
+        <DialogContent style={{ direction: "rtl" }}>
+          {/* نضيف شرطاً هنا لضمان عدم قراءة خصائص الـ null */}
+          {passTodo && (
+            <>
               <TextField
+                autoFocus
+                required
+                margin="dense"
+                id="title"
+                label="عنوان المهمة"
+                type="text"
                 fullWidth
-                id="outlined-basic"
-                label="عنوان المهمة الجديدة"
-                variant="outlined"
-                value={titleInput}
+                variant="standard"
+                value={passTodo.title}
                 onChange={(e) => {
-                  setTitleInput(e.target.value);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleAddClic();
-                  }
+                  setPassTodo({ ...passTodo, title: e.target.value });
                 }}
               />
-            </Grid>
-            <Grid size={4}>
-              <Button
-                variant="contained"
-                color="success"
+
+              <TextField
+                margin="dense"
+                id="description"
+                label="وصف المهمة"
+                type="text"
                 fullWidth
-                sx={{ height: "56px", fontSize: "1rem" }}
-                onClick={() => {
-                  handleAddClic();
+                variant="standard"
+                value={passTodo.description}
+                onChange={(e) => {
+                  setPassTodo({ ...passTodo, description: e.target.value });
                 }}
-                disabled={titleInput <= 0}
-              >
-                اضافة
-              </Button>
+              />
+            </>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseEdit} autoFocus>
+            لا
+          </Button>
+          <Button onClick={handleEditConfirm}>نعم , تاكيد</Button>
+        </DialogActions>
+      </Dialog>
+      {/*=======End of Edit Dialog */}
+
+      <Container maxWidth="sm" sx={{ height: "500px" }}>
+        <CssBaseline />
+
+        <Card
+          sx={{ minWidth: 275, padding: "20px", marginTop: "40px" }}
+          style={{
+            maxHeight: "80vh",
+            overflow: "scroll",
+            borderRadius: "25px",
+          }}
+        >
+          <Typography
+            variant="h2"
+            component="h1"
+            sx={{
+              color: "black !important",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            المهام اليومية
+          </Typography>
+
+          <ToggleButtonGroup
+            exclusive
+            aria-label="text"
+            value={displayTodosType}
+            sx={{ marginTop: "15px", mb: "10px" }}
+            onChange={changeDisplayType}
+          >
+            <ToggleButton
+              value="non-Completed"
+              aria-label="left aligned"
+              sx={{ fontSize: "22px" }}
+            >
+              غير منجز
+            </ToggleButton>
+            <ToggleButton
+              value="completed"
+              aria-label="centered"
+              sx={{ fontSize: "22px" }}
+            >
+              منجز
+            </ToggleButton>
+            <ToggleButton
+              value="all"
+              aria-label="right aligned"
+              sx={{ fontSize: "22px" }}
+            >
+              الكل
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          {todoJsx}
+          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+            <Grid
+              container
+              spacing={2}
+              sx={{ width: "100%", alignItems: "center" }}
+            >
+              <Grid size={8}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="عنوان المهمة الجديدة"
+                  variant="outlined"
+                  value={titleInput}
+                  onChange={(e) => {
+                    setTitleInput(e.target.value);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleAddClic();
+                    }
+                  }}
+                />
+              </Grid>
+              <Grid size={4}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  fullWidth
+                  sx={{ height: "56px", fontSize: "1rem" }}
+                  onClick={() => {
+                    handleAddClic();
+                  }}
+                  disabled={titleInput <= 0}
+                >
+                  اضافة
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-      </Card>
-     </Container>
+          </Box>
+        </Card>
+      </Container>
     </>
   );
 }
