@@ -32,9 +32,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 /* ========= End of Dialog */
 
-export default function Todo({ todo }) {
+export default function Todo({ todo , showDialog }) {
   const { todos, setTodos } = useContext(TodosContext);
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [updatedTodo, setUpdatedTodo] = useState({
     title: todo.title,
@@ -49,25 +48,19 @@ export default function Todo({ todo }) {
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos)); 
   }
-  function handleDeleteClick() {
-    setShowDeleteDialog(true);
-  }
+  
   function handleEditClicK() {
     setShowEditDialog(true);
   }
-  function handleClose() {
-    setShowDeleteDialog(false);
-  }
+  
   function handleCloseEdit() {
     setShowEditDialog(false);
   }
-  function handleDeleteConfirm() {
-    const updatedTodos = todos.filter((t) => {
-      return t.id != todo.id;
-    });
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+
+  function handleDeleteClick() {
+    showDialog(todo)
   }
+ 
 
   function handleEditConfirm() {
     const updatedTodos = todos.map((t) => {
@@ -88,34 +81,7 @@ export default function Todo({ todo }) {
   //=====End Events Handlers
   return (
     <>
-      {/*Delete Dialog  */}
-      <Dialog
-        style={{ direction: "rtl" }}
-        open={showDeleteDialog}
-        slots={{
-          transition: Transition,
-        }}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-        role="alertdialog"
-      >
-        <DialogTitle sx={{ color: "black !important" }}>
-          هل تريد حذف هذه المهمة
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            لن تتمكن من استرداد هذه المهمة اذا حذفتها
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            لا
-          </Button>
-          <Button onClick={handleDeleteConfirm}>نعم , تاكيد</Button>
-        </DialogActions>
-      </Dialog>
-      {/*=======End of Delete Dialog */}
+      
 
       {/*Edit Dialog -=========- */}
       <Dialog

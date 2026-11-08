@@ -10,11 +10,29 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Todo from "./components/Todo";
+//====ID library
 import { v4 as uuidv4 } from "uuid";
+//React states
 import { useState, useContext, useEffect, useMemo } from "react";
 import { TodosContext } from "./contexts/todosContext";
 
+/* Dialog */
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+/* ========= End of Dialog and slide intialise  */
+
 export default function TodoList() {
+  const [passTodo , setPassTodo] = useState(null) 
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const { todos, setTodos } = useContext(TodosContext);
   const [displayTodosType, setDisplayTodosType] = useState("all");
   //filtering the todos
@@ -42,9 +60,7 @@ export default function TodoList() {
     TodoToBeRender = todos;
   }
 
-  const todoJsx = TodoToBeRender.map((t) => {
-    return <Todo key={t.id} todo={t} />;
-  });
+  
   const [titleInput, setTitleInput] = useState("");
 
   function changeDisplayType(e) {
@@ -69,8 +85,59 @@ export default function TodoList() {
     setTodos(storageTodos);
   }, []);
 
+  
+
+  function handleClose() {
+    setShowDeleteDialog(false);
+  }
+
+   function handleDeleteConfirm() {
+    const updatedTodos = todos.filter((t) => {
+      return t.id != passTodo.id;
+    });
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    setShowDeleteDialog(false);
+  }
+
+  function openDeleteDialog(todo){
+    setPassTodo(todo);
+    setShowDeleteDialog(true);
+  }
+   const todoJsx = TodoToBeRender.map((t) => {
+    return <Todo key={t.id} todo={t} showDialog={openDeleteDialog}/>;
+  });
   return (
-    <Container maxWidth="sm" sx={{ height: "500px" }}>
+    <>
+    {/*Delete Dialog  */}
+      <Dialog
+        style={{ direction: "rtl" }}
+        open={showDeleteDialog}
+        slots={{
+          transition: Transition,
+        }}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+        role="alertdialog"
+      >
+        <DialogTitle sx={{ color: "black !important" }}>
+          هل تريد حذف هذه المهمة
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            لن تتمكن من استرداد هذه المهمة اذا حذفتها
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            لا
+          </Button>
+          <Button onClick={handleDeleteConfirm}>نعم , تاكيد</Button>
+        </DialogActions>
+      </Dialog>
+      {/*=======End of Delete Dialog */}
+     <Container maxWidth="sm" sx={{ height: "500px" }}>
       <CssBaseline />
 
       <Card
@@ -160,6 +227,7 @@ export default function TodoList() {
           </Grid>
         </Box>
       </Card>
-    </Container>
+     </Container>
+    </>
   );
 }
