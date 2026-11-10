@@ -1,7 +1,8 @@
 import { TodosContext } from "./contexts/todosContext";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
-import TodoList from "./TodoList"
+import TodoList from "./TodoList";
+import MySnackBar from "./components/MySnackBar";
 
 const initialTodos = [
   {
@@ -25,7 +26,19 @@ const initialTodos = [
 ];
 
 function App() {
+
   const [todos, setTodos] = useState(initialTodos);
+  const [open, setOpen] = useState(false);
+
+
+
+  function showHideToast(){
+    setOpen(true);
+    setTimeout(() => {
+      setOpen(false);
+    }, 2000);
+  }
+
   return (
     <div
       style={{
@@ -36,7 +49,8 @@ function App() {
         background: "#1e1e2f",
       }}
     >
-      <TodosContext.Provider value={{todos,setTodos}}>
+      <MySnackBar open={open} />
+      <TodosContext.Provider value={{ todos, setTodos }}>
         <TodoList />
       </TodosContext.Provider>
     </div>
