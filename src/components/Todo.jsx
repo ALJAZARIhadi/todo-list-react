@@ -1,7 +1,5 @@
-import * as React from "react";
-import { useState } from "react";
 /* MUI components */
-import { TextField } from "@mui/material";
+
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -17,14 +15,10 @@ import { TodosContext } from "../contexts/todosContext";
 import { ToastContext } from "../contexts/ToastContext";
 /*==== End of Context */
 
-
-export default function Todo({ todo , showDialog , showUpdateDialog }) {
+export default function Todo({ todo, showDialog, showUpdateDialog }) {
   const { todos, setTodos } = useContext(TodosContext);
-  const {showHideToast} =useContext(ToastContext);
-  /* const [updatedTodo, setUpdatedTodo] = useState({
-    title: passTodo.title,
-    description: passTodo.description,
-  }); */
+  const { showHideToast } = useContext(ToastContext);
+
   // Event handlers
   function handleDoneClick() {
     const updatedTodos = todos.map((t) => {
@@ -32,21 +26,20 @@ export default function Todo({ todo , showDialog , showUpdateDialog }) {
       return t;
     });
     setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos)); 
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
     showHideToast("تم التعديل بنجاح");
   }
-  
+
   function handleEditClicK() {
-    showUpdateDialog(todo)
+    showUpdateDialog(todo);
   }
 
   function handleDeleteClick() {
-    showDialog(todo)
+    showDialog(todo);
   }
   //=====End Events Handlers
   return (
     <>
-
       {/* بطاقة المهمة بتصميم ولون متناسق خاص بها */}
       <Card
         sx={{
