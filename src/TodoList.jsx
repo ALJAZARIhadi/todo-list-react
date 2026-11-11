@@ -13,6 +13,7 @@ import Todo from "./components/Todo";
 //====ID library
 import { v4 as uuidv4 } from "uuid";
 //React states
+import { ToastContext } from "./contexts/ToastContext";
 import { useState, useContext, useEffect, useMemo } from "react";
 import { TodosContext } from "./contexts/todosContext";
 
@@ -24,6 +25,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -31,10 +33,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 /* ========= End of Dialog and slide intialise  */
 
 export default function TodoList() {
+  const {showHideToast} =useContext(ToastContext);
+  const { todos, setTodos } = useContext(TodosContext);
+  
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [passTodo, setPassTodo] = useState({title:"" , description:""});
-  const { todos, setTodos } = useContext(TodosContext);
   const [displayTodosType, setDisplayTodosType] = useState("all");
 
   //filtering the todos
@@ -80,6 +84,7 @@ export default function TodoList() {
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setTitleInput("");
+    showHideToast("تم اضافة المهمة بنجاح");
   }
   useEffect(() => {
     console.log("first");
@@ -98,6 +103,7 @@ export default function TodoList() {
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setShowDeleteDialog(false);
+    showHideToast("تم حذف المهمة بنجاح")
   }
 
   function handleEditConfirm() {
@@ -115,6 +121,7 @@ export default function TodoList() {
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setShowEditDialog(false);
+    showHideToast("تم تحديث المهمة بنجاح");
   }
   //=====Confirm handelrs end
   function openDeleteDialog(todo) {

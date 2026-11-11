@@ -3,12 +3,12 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
-export default function MySnackBar({open}) {
+export default function MySnackBar({open ,message}) {
   return (
     <div>
       <Snackbar open={open}>
         <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
-          This is a success Alert inside a Snackbar!
+          {message}
         </Alert>
       </Snackbar>
     </div>

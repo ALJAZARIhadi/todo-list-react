@@ -14,26 +14,13 @@ import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 /* Context */
 import { useContext } from "react";
 import { TodosContext } from "../contexts/todosContext";
+import { ToastContext } from "../contexts/ToastContext";
 /*==== End of Context */
 
-/* Dialog */
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
-import { TurnLeft } from "@mui/icons-material";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
-/* ========= End of Dialog */
 
 export default function Todo({ todo , showDialog , showUpdateDialog }) {
   const { todos, setTodos } = useContext(TodosContext);
+  const {showHideToast} =useContext(ToastContext);
   /* const [updatedTodo, setUpdatedTodo] = useState({
     title: passTodo.title,
     description: passTodo.description,
@@ -46,6 +33,7 @@ export default function Todo({ todo , showDialog , showUpdateDialog }) {
     });
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos)); 
+    showHideToast("تم التعديل بنجاح");
   }
   
   function handleEditClicK() {
