@@ -13,7 +13,7 @@ import Todo from "./components/Todo";
 //====ID library
 import { v4 as uuidv4 } from "uuid";
 //React states
-import { ToastContext } from "./contexts/ToastContext";
+import { useToast } from "./contexts/ToastContext";
 import { useState, useContext, useEffect, useMemo } from "react";
 import { TodosContext } from "./contexts/todosContext";
 
@@ -33,7 +33,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 /* ========= End of Dialog and slide intialise  */
 
 export default function TodoList() {
-  const {showHideToast} =useContext(ToastContext);
+  const {showHideToast} =useToast();
   const { todos, setTodos } = useContext(TodosContext);
   
   const [showEditDialog, setShowEditDialog] = useState(false);

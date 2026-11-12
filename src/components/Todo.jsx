@@ -12,12 +12,12 @@ import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 /* Context */
 import { useContext } from "react";
 import { TodosContext } from "../contexts/todosContext";
-import { ToastContext } from "../contexts/ToastContext";
+import { useToast } from "../contexts/ToastContext";
 /*==== End of Context */
 
 export default function Todo({ todo, showDialog, showUpdateDialog }) {
   const { todos, setTodos } = useContext(TodosContext);
-  const { showHideToast } = useContext(ToastContext);
+  const { showHideToast } = useToast();
 
   // Event handlers
   function handleDoneClick() {
