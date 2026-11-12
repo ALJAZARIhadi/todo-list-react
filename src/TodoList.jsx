@@ -1,4 +1,5 @@
 import * as React from "react";
+//MUI components
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
@@ -10,6 +11,8 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Todo from "./components/Todo";
+//========end MUI components
+
 //====ID library
 import { v4 as uuidv4 } from "uuid";
 //React states
