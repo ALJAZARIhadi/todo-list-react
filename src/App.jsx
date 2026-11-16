@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import TodoList from "./TodoList";
 import {ToastProvider } from "./contexts/ToastContext";
+
 const initialTodos = [
   {
     id: uuidv4(),
