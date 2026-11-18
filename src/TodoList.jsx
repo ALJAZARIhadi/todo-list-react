@@ -17,9 +17,9 @@ import Todo from "./components/Todo";
 import { v4 as uuidv4 } from "uuid";
 //React states
 import { useToast } from "./contexts/ToastContext";
-import { useState, useContext, useEffect, useMemo } from "react";
+import { useState, useContext, useEffect, useMemo, useReducer } from "react";
 import { TodosContext } from "./contexts/todosContext";
-
+import todosReducers from "./reducers/todosReducer";
 /* Dialog */
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -28,7 +28,6 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -36,12 +35,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 /* ========= End of Dialog and slide intialise  */
 
 export default function TodoList() {
-  const {showHideToast} =useToast();
-  const { todos, setTodos } = useContext(TodosContext);
-  
+  const { showHideToast } = useToast();
+  const { todos2, setTodos } = useContext(TodosContext);
+
+  const [todos, dispatch] = useReducer(todosReducers, []);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [passTodo, setPassTodo] = useState({title:"" , description:""});
+  const [passTodo, setPassTodo] = useState({ title: "", description: "" });
   const [displayTodosType, setDisplayTodosType] = useState("all");
 
   //filtering the todos
@@ -77,15 +77,7 @@ export default function TodoList() {
   }
   //=====Handlers
   function handleAddClic() {
-    const newTodo = {
-      id: uuidv4(),
-      title: titleInput,
-      description: "",
-      isCompleted: false,
-    };
-    const updatedTodos = [...todos, newTodo];
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    dispatch({type:"added", payload:{newTitle: titleInput}});
     setTitleInput("");
     showHideToast("تم اضافة المهمة بنجاح");
   }
@@ -106,7 +98,7 @@ export default function TodoList() {
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setShowDeleteDialog(false);
-    showHideToast("تم حذف المهمة بنجاح")
+    showHideToast("تم حذف المهمة بنجاح");
   }
 
   function handleEditConfirm() {
