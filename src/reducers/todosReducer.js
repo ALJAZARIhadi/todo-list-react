@@ -22,8 +22,24 @@ export default function reducer(currentTodos, action) {
 
       return updatedTodos;
     }
-    case "updated":{
-      return 
+    case "updated": {
+      const updatedTodos = currentTodos.map((t) => {
+        if (t.id == action.payload.id) {
+          return {
+            ...t,
+            title: action.payload.title,
+            description: action.payload.description,
+          };
+        } else {
+          return t;
+        }
+      });
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    }
+    case "get": {
+      const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
+      return storageTodos;
     }
     default: {
       throw Error("Unkown Action" + action.type);

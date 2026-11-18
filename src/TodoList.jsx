@@ -82,9 +82,7 @@ export default function TodoList() {
     showHideToast("تم اضافة المهمة بنجاح");
   }
   useEffect(() => {
-    console.log("first");
-    const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
-    setTodos(storageTodos);
+    dispatch({type:"get"})
   }, []);
 
   function handleClose() {
@@ -99,23 +97,11 @@ export default function TodoList() {
   }
 
   function handleEditConfirm() {
-    console.log(passTodo)
-    const updatedTodos = todos.map((t) => {
-      if (t.id == passTodo.id) {
-        return {
-          ...t,
-          title: passTodo.title,
-          description: passTodo.description,
-        };
-      } else {
-        return t;
-      }
-    });
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    
+    dispatch({ type: "updated", payload: passTodo  });
     setShowEditDialog(false);
     showHideToast("تم تحديث المهمة بنجاح");
-    console.log(updatedTodos)
+    
   }
   //=====Confirm handelrs end
   function openDeleteDialog(todo) {
