@@ -77,7 +77,7 @@ export default function TodoList() {
   }
   //=====Handlers
   function handleAddClic() {
-    dispatch({type:"added", payload:{newTitle: titleInput}});
+    dispatch({ type: "added", payload: { newTitle: titleInput } });
     setTitleInput("");
     showHideToast("تم اضافة المهمة بنجاح");
   }
@@ -91,12 +91,9 @@ export default function TodoList() {
     setShowDeleteDialog(false);
   }
   //=====Confirm handelrs
+
   function handleDeleteConfirm() {
-    const updatedTodos = todos.filter((t) => {
-      return t.id != passTodo.id;
-    });
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    dispatch({ type: "deleted", payload: passTodo  });
     setShowDeleteDialog(false);
     showHideToast("تم حذف المهمة بنجاح");
   }

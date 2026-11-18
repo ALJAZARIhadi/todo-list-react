@@ -1,6 +1,7 @@
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export default function reducer(currentTodos, action) {
+  
   switch (action.type) {
     case "added": {
       const newTodo = {
@@ -11,9 +12,16 @@ export default function reducer(currentTodos, action) {
       };
       const updatedTodos = [...currentTodos, newTodo];
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      
-     
-      return updatedTodos
+
+      return updatedTodos;
+    }
+    case "deleted": {
+      const updatedTodos = currentTodos.filter((t) => {
+        return t.id != action.payload.id;
+      });
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+
+      return updatedTodos;
     }
     default: {
       throw Error("Unkown Action" + action.type);
