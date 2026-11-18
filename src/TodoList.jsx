@@ -99,6 +99,7 @@ export default function TodoList() {
   }
 
   function handleEditConfirm() {
+    console.log(passTodo)
     const updatedTodos = todos.map((t) => {
       if (t.id == passTodo.id) {
         return {
@@ -114,6 +115,7 @@ export default function TodoList() {
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setShowEditDialog(false);
     showHideToast("تم تحديث المهمة بنجاح");
+    console.log(updatedTodos)
   }
   //=====Confirm handelrs end
   function openDeleteDialog(todo) {
