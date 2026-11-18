@@ -18,7 +18,7 @@ import { v4 as uuidv4 } from "uuid";
 //React states
 import { useToast } from "./contexts/ToastContext";
 import { useState, useContext, useEffect, useMemo, useReducer } from "react";
-import { TodosContext } from "./contexts/todosContext";
+
 import todosReducers from "./reducers/todosReducer";
 /* Dialog */
 import Dialog from "@mui/material/Dialog";
@@ -36,7 +36,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function TodoList() {
   const { showHideToast } = useToast();
-  const { todos2, setTodos } = useContext(TodosContext);
 
   const [todos, dispatch] = useReducer(todosReducers, []);
   const [showEditDialog, setShowEditDialog] = useState(false);
@@ -82,7 +81,7 @@ export default function TodoList() {
     showHideToast("تم اضافة المهمة بنجاح");
   }
   useEffect(() => {
-    dispatch({type:"get"})
+    dispatch({ type: "get" });
   }, []);
 
   function handleClose() {
@@ -91,17 +90,15 @@ export default function TodoList() {
   //=====Confirm handelrs
 
   function handleDeleteConfirm() {
-    dispatch({ type: "deleted", payload: passTodo  });
+    dispatch({ type: "deleted", payload: passTodo });
     setShowDeleteDialog(false);
     showHideToast("تم حذف المهمة بنجاح");
   }
 
   function handleEditConfirm() {
-    
-    dispatch({ type: "updated", payload: passTodo  });
+    dispatch({ type: "updated", payload: passTodo });
     setShowEditDialog(false);
     showHideToast("تم تحديث المهمة بنجاح");
-    
   }
   //=====Confirm handelrs end
   function openDeleteDialog(todo) {
