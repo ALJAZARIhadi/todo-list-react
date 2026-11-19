@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import todosReducer from "../reducers/todosReducer";
 
 export const TodosContext = createContext([]);
@@ -11,4 +11,7 @@ const TodosProvider = ({ children }) => {
     </TodosContext.Provider>
   );
 };
+export const useTodos = ()=>{
+  return useContext(TodosContext);
+}
 export default TodosProvider;

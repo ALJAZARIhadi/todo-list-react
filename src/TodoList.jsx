@@ -27,7 +27,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-import { TodosContext } from "./contexts/todosContext";
+import { useTodos } from "./contexts/todosContext";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -36,7 +36,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 /* ========= End of Dialog and slide intialise  */
 
 export default function TodoList() {
-  const {todos,dispatch} = useContext(TodosContext)
+  const {todos,dispatch} = useTodos()
   const { showHideToast } = useToast();
 
   const [showEditDialog, setShowEditDialog] = useState(false);

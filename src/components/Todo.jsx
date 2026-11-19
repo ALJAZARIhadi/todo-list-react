@@ -11,22 +11,17 @@ import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 
 /* Context */
 import { useContext } from "react";
-import { TodosContext } from "../contexts/todosContext";
+import { useTodos } from "../contexts/todosContext";
 import { useToast } from "../contexts/ToastContext";
 /*==== End of Context */
 
 export default function Todo({ todo, showDialog, showUpdateDialog }) {
-  const { todos, setTodos } = useContext(TodosContext);
+  const { todos, dispatch} = useTodos()
   const { showHideToast } = useToast();
 
   // Event handlers
   function handleDoneClick() {
-    const updatedTodos = todos.map((t) => {
-      if (t.id == todo.id) t.isCompleted = !t.isCompleted;
-      return t;
-    });
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    dispatch({type:"toggledCompleted" ,payload:todo})
     showHideToast("تم التعديل بنجاح");
   }
 
