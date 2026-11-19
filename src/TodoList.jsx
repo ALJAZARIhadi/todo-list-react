@@ -17,9 +17,8 @@ import Todo from "./components/Todo";
 import { v4 as uuidv4 } from "uuid";
 //React states
 import { useToast } from "./contexts/ToastContext";
-import { useState, useContext, useEffect, useMemo, useReducer } from "react";
+import { useState, useEffect, useMemo } from "react";
 
-import todosReducers from "./reducers/todosReducer";
 /* Dialog */
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";

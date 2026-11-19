@@ -10,7 +10,6 @@ import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 /*======End of MUI components */
 
 /* Context */
-import { useContext } from "react";
 import { useTodos } from "../contexts/todosContext";
 import { useToast } from "../contexts/ToastContext";
 /*==== End of Context */

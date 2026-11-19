@@ -42,15 +42,18 @@ export default function reducer(currentTodos, action) {
       return storageTodos;
     }
     case "toggledCompleted": {
-      
       const updatedTodos = currentTodos.map((t) => {
-        if (t.id == action.payload.id) t.isCompleted = !t.isCompleted;
+        if (t.id == action.payload.id){
+          const updatedTodo = { // to fix the mutation
+            ...t, isCompleted: !t.isCompleted
+          }
+          return updatedTodo;
+        } 
         return t;
       });
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
 
       return updatedTodos;
-      
     }
 
     default: {
