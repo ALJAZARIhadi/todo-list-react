@@ -4,6 +4,7 @@ import { useState } from "react";
 import TodoList from "./TodoList";
 import {ToastProvider } from "./contexts/ToastContext";
 import { useReducer } from "react";
+import TodosProvider from "./contexts/todosContext";
 const initialTodos = [
   {
     id: uuidv4(),
@@ -29,6 +30,7 @@ function App() {
   const [todos, setTodos] = useState(initialTodos);
 
   return (
+    <TodosProvider>
     <ToastProvider>
       <div
         style={{
@@ -39,11 +41,12 @@ function App() {
           background: "#1e1e2f",
         }}
       >
-        <TodosContext.Provider value={{ todos, setTodos }}>
+        
           <TodoList />
-        </TodosContext.Provider>
+        
       </div>
     </ToastProvider>
+    </TodosProvider>
   );
 }
 
