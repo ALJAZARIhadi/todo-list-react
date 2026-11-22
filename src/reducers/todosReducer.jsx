@@ -40,7 +40,7 @@ export default function reducer(currentTodos, action) {
     case "get": {
       const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
       return storageTodos;
-    }
+    } 
     case "toggledCompleted": {
       const updatedTodos = currentTodos.map((t) => {
         if (t.id == action.payload.id){
