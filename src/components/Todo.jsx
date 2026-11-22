@@ -10,12 +10,13 @@ import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 /*======End of MUI components */
 
 /* Context */
-import { useTodos } from "../contexts/todosContext";
+import { useTodosDispatch  } from "../contexts/todosContext";
 import { useToast } from "../contexts/ToastContext";
 /*==== End of Context */
 
 export default function Todo({ todo, showDialog, showUpdateDialog }) {
-  const { todos, dispatch} = useTodos()
+  
+  const dispatch = useTodosDispatch();
   const { showHideToast } = useToast();
 
   // Event handlers
