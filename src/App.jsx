@@ -37,7 +37,7 @@ function App() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          minHeight: "110vh", // trying to understand
+          minHeight: "110vh", 
           background: "#1e1e2f",
         }}
       >
