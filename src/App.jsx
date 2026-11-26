@@ -5,6 +5,7 @@ import TodoList from "./TodoList";
 import {ToastProvider } from "./contexts/ToastContext";
 import { useReducer } from "react";
 import TodosProvider from "./contexts/todosContext";
+//api fundementls
 const initialTodos = [
   {
     id: uuidv4(),
