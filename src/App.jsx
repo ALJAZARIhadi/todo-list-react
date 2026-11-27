@@ -6,6 +6,7 @@ import {ToastProvider } from "./contexts/ToastContext";
 import { useReducer } from "react";
 import TodosProvider from "./contexts/todosContext";
 //api fundementls
+//Reveiw the code , planing to add api instead of initialTodos as initial Todos API 
 const initialTodos = [
   {
     id: uuidv4(),
